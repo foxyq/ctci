@@ -99,5 +99,18 @@ LinkedList.prototype.findKthToLast = function(k) {
     pointerOffset = pointerOffset.next;
   }
 
-  return resultPointer.value;
+  return resultPointer;
+};
+
+LinkedList.prototype.deleteNode = function(deleteMe) {
+  let current = deleteMe;
+  let prev;
+
+  while (current.next !== null) {
+    current.value = current.next.value;
+    prev = current;
+    current = current.next;
+  }
+
+  prev.next = null;
 };
