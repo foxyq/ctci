@@ -12,12 +12,16 @@ function Node(value, next) {
   this.next = next;
 }
 
-LinkedList.prototype.printList = function(start) {
-  let node = start;
+const isListEmpty = start => {
+  return start === null || start.next === null;
+};
+
+LinkedList.prototype.printList = function() {
+  let node = this.head;
   console.log("** list start **");
 
   while (node !== null) {
-    console.log(node.value + " next -> " + node.next);
+    console.log(node.value);
     node = node.next;
   }
 
@@ -43,9 +47,10 @@ LinkedList.prototype.pushToTail = function(value) {
   this.tail = newNode;
 };
 
-LinkedList.prototype.removeDuplicates = function(start) {
-  // no need to delete anything
-  if (start === null || start.next === null) {
+LinkedList.prototype.removeDuplicates = function() {
+  const start = this.head;
+
+  if (isListEmpty(start)) {
     return start;
   }
 
@@ -68,4 +73,31 @@ LinkedList.prototype.removeDuplicates = function(start) {
   }
 
   this.tail = currentNode;
+};
+
+LinkedList.prototype.findKthToLast = function(k) {
+  const start = this.head;
+
+  if (isListEmpty(start)) {
+    return null;
+  }
+
+  let pointerOffset = start;
+  let counter = 1;
+
+  while (counter <= k && pointerOffset !== null) {
+    pointerOffset = pointerOffset.next;
+    counter += 1;
+  }
+
+  // pointerOffset is set k steps from the start
+  // resultPointer will be k steps from the end when pointerOffset is at the end
+  let resultPointer = start;
+
+  while (pointerOffset !== null) {
+    resultPointer = resultPointer.next;
+    pointerOffset = pointerOffset.next;
+  }
+
+  return resultPointer.value;
 };
