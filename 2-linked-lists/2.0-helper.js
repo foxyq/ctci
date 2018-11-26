@@ -114,3 +114,24 @@ LinkedList.prototype.deleteNode = function(deleteMe) {
 
   prev.next = null;
 };
+
+LinkedList.prototype.partition = function(value) {
+  const lowerList = new LinkedList();
+  const higherList = new LinkedList();
+
+  let current = this.head;
+
+  while (current.next !== null) {
+    if (current.value < value) {
+      lowerList.pushToTail(current.value);
+    } else {
+      higherList.pushToTail(current.value);
+    }
+
+    current = current.next;
+  }
+
+  lowerList.tail.next = higherList.head;
+
+  lowerList.printList();
+};

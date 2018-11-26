@@ -16,4 +16,4 @@ list.pushToTail("6666");
 
 list.printList(list.head);
 
-console.log(list.findKthToLast(4));
+console.log(list.findKthToLast(1));
