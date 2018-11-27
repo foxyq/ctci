@@ -54,5 +54,5 @@ const testArray = [
 ];
 
 testArray.forEach(list => {
-  helper.AssertEqual(list[0].isPalindrome(), list[1], "whether is palindrome");
+  helper.assertEqual(list[0].isPalindrome(), list[1], "whether is palindrome");
 });

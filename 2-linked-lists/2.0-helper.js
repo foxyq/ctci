@@ -1,7 +1,8 @@
 module.exports = {
   LinkedList: LinkedList,
-  SumLists: sumLists,
-  AssertEqual: assertEqual
+  sumLists: sumLists,
+  assertEqual: assertEqual,
+  findIntersection: findIntersection
 };
 
 function LinkedList() {
@@ -63,6 +64,46 @@ function sumLists(l1, l2) {
   }
 
   return sumList;
+}
+
+function findIntersection(l1, l2) {
+  if (l1.tail !== l2.tail) {
+    return null;
+  }
+
+  let p1 = l1.head;
+  let p2 = l2.head;
+
+  let longer = "";
+  let shorter = "";
+
+  if (l1.length() !== l2.length()) {
+    longer = l1.length() > l2.length() ? l1 : l2;
+    shorter = l1.length() < l2.length() ? l1 : l2;
+
+    p1 = longer.head;
+    p2 = shorter.head;
+
+    const diff = longer.length() - shorter.length();
+    let counter = 1;
+
+    while (counter <= diff) {
+      p1 = p1.next;
+      counter++;
+    }
+  }
+
+  // lists are the "same length" now thatnks to moved pointer p1
+  while (p1 !== null) {
+    if (p1.value === p2.value && p1.next === p2.next) {
+      return p1;
+    }
+
+    p1 = p1.next;
+    p2 = p2.next;
+  }
+
+  return null;
 }
 
 function assertEqual(actual = 0, expected = 0, testName = "test") {

@@ -16,6 +16,6 @@ list2.addToHead(4);
 list1.printList();
 list2.printList();
 
-const result = helper.SumLists(list1, list2);
+const result = helper.sumLists(list1, list2);
 
 result.printList();
