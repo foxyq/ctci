@@ -1,5 +1,6 @@
 module.exports = {
-  LinkedList: LinkedList
+  LinkedList: LinkedList,
+  SumLists: sumLists
 };
 
 function LinkedList() {
@@ -15,6 +16,53 @@ function Node(value, next) {
 const isListEmpty = start => {
   return start === null || start.next === null;
 };
+
+function sumLists(l1, l2) {
+  if (l1.head.value === null && l2.head.value === null) {
+    return 0;
+  }
+
+  let p1 = l1.head;
+  let p2 = l2.head;
+  let carry = 0;
+
+  const sumList = new LinkedList();
+
+  const l1len = l1.length();
+  const l2len = l2.length();
+
+  if (l1len !== l2len) {
+    const longer = l1len > l2len ? l1 : l2;
+    const shorter = l1len < l2len ? l1 : l2;
+
+    let counter = 0;
+    const diff = longer.length() - shorter.length();
+
+    while (counter !== diff) {
+      shorter.pushToTail(0);
+      counter++;
+    }
+
+    return sumLists(shorter, longer);
+  } else {
+    //standard case
+
+    while (p1 !== null) {
+      const addition = (p1.value + p2.value + carry) % 10;
+      carry = p1.value + p2.value + carry >= 10 ? 1 : 0;
+      sumList.pushToTail(addition);
+
+      p1 = p1.next;
+      p2 = p2.next;
+    }
+
+    if (carry !== 0) {
+      sumList.pushToTail(carry);
+    }
+  }
+
+  return sumList;
+}
 
 LinkedList.prototype.printList = function() {
   let node = this.head;
@@ -134,4 +182,16 @@ LinkedList.prototype.partition = function(value) {
   lowerList.tail.next = higherList.head;
 
   lowerList.printList();
+};
+
+LinkedList.prototype.length = function() {
+  let node = this.head;
+  let length = 0;
+
+  while (node !== null) {
+    length++;
+    node = node.next;
+  }
+
+  return length;
 };
