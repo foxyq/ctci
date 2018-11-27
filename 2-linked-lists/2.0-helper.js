@@ -1,6 +1,7 @@
 module.exports = {
   LinkedList: LinkedList,
-  SumLists: sumLists
+  SumLists: sumLists,
+  AssertEqual: assertEqual
 };
 
 function LinkedList() {
@@ -62,6 +63,16 @@ function sumLists(l1, l2) {
   }
 
   return sumList;
+}
+
+function assertEqual(actual = 0, expected = 0, testName = "test") {
+  if (actual === expected) {
+    console.log("PASSED");
+  } else {
+    console.log(
+      `FAILED [${testName}] Expected ${expected} , but got ${actual}`
+    );
+  }
 }
 
 LinkedList.prototype.printList = function() {
@@ -194,4 +205,45 @@ LinkedList.prototype.length = function() {
   }
 
   return length;
+};
+
+LinkedList.prototype.isPalindrome = function() {
+  let node = this.head;
+  const length = this.length();
+
+  if (length <= 1) {
+    return true;
+  }
+
+  const stack = [];
+
+  let counter = 1;
+  let even = false;
+
+  const half = length / 2;
+  const flooredHalf = Math.floor(length / 2);
+
+  if (half === flooredHalf) {
+    even = true;
+  }
+
+  while (node !== null) {
+    if (counter <= half) {
+      stack.push(node.value);
+    } else {
+      if (!even) {
+        // the middle element of odd list gets skipped here
+        even = true;
+      } else {
+        // const topOfStack = stack.pop()
+        if (stack.pop() !== node.value) {
+          return false;
+        }
+      }
+    }
+    counter++;
+    node = node.next;
+  }
+
+  return true;
 };
