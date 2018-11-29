@@ -1,8 +1,11 @@
 module.exports = {
-  LinkedList: LinkedList,
-  sumLists: sumLists,
-  assertEqual: assertEqual,
-  findIntersection: findIntersection
+  LinkedList,
+  Node,
+  sumLists,
+  compareLists,
+  compareNodes,
+  assertEqual,
+  findIntersection
 };
 
 function LinkedList() {
@@ -10,7 +13,7 @@ function LinkedList() {
   this.tail = null;
 }
 
-function Node(value, next) {
+function Node(value = null, next = null) {
   this.value = value;
   this.next = next;
 }
@@ -18,6 +21,27 @@ function Node(value, next) {
 const isListEmpty = start => {
   return start === null || start.next === null;
 };
+
+function compareLists(l1, l2) {
+  if (!l1 || !l2) return false;
+  if (l1.length !== l2.length) return false;
+
+  let n1 = l1.head;
+  let n2 = l2.head;
+
+  while (n1 !== null && n2 !== null) {
+    if (n1.value !== n2.value) return false;
+
+    n1 = n1.next;
+    n2 = n2.next;
+  }
+
+  return n1 === null && n2 === null;
+}
+
+function compareNodes(n1, n2) {
+  return n1.value === n2.value && n1.next === n2.next;
+}
 
 function sumLists(l1, l2) {
   if (l1.head.value === null && l2.head.value === null) {
@@ -178,7 +202,7 @@ LinkedList.prototype.removeDuplicates = function() {
 LinkedList.prototype.findKthToLast = function(k) {
   const start = this.head;
 
-  if (isListEmpty(start)) {
+  if (isListEmpty(start) || k < 1) {
     return null;
   }
 
@@ -203,8 +227,10 @@ LinkedList.prototype.findKthToLast = function(k) {
 };
 
 LinkedList.prototype.deleteNode = function(deleteMe) {
+  if (!deleteMe) return;
+
   let current = deleteMe;
-  let prev;
+  let prev = current;
 
   while (current.next !== null) {
     current.value = current.next.value;
@@ -221,7 +247,7 @@ LinkedList.prototype.partition = function(value) {
 
   let current = this.head;
 
-  while (current.next !== null) {
+  while (current !== null) {
     if (current.value < value) {
       lowerList.pushToTail(current.value);
     } else {
@@ -231,9 +257,13 @@ LinkedList.prototype.partition = function(value) {
     current = current.next;
   }
 
-  lowerList.tail.next = higherList.head;
+  if (lowerList.tail) {
+    lowerList.tail.next = higherList.head;
 
-  lowerList.printList();
+    return lowerList;
+  } else {
+    return higherList;
+  }
 };
 
 LinkedList.prototype.length = function() {
@@ -249,12 +279,13 @@ LinkedList.prototype.length = function() {
 };
 
 LinkedList.prototype.isPalindrome = function() {
-  let node = this.head;
   const length = this.length();
 
   if (length <= 1) {
     return true;
   }
+
+  let node = this.head;
 
   const stack = [];
 
@@ -287,4 +318,32 @@ LinkedList.prototype.isPalindrome = function() {
   }
 
   return true;
+};
+
+LinkedList.prototype.isCycle = function() {
+  let slow = this.head;
+  let fast = this.head;
+
+  while (fast !== null && fast.next !== null) {
+    slow = slow.next;
+    fast = fast.next.next;
+
+    if (slow === fast) return slow;
+  }
+
+  return null;
+};
+
+LinkedList.prototype.findCycleStart = function() {
+  let meetingPoint = this.isCycle();
+  let node = this.head;
+
+  if (!meetingPoint) return null;
+
+  while (node !== meetingPoint) {
+    node = node.next;
+    meetingPoint = meetingPoint.next;
+  }
+
+  return node;
 };
