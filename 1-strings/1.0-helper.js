@@ -1,3 +1,5 @@
+"use strict";
+
 module.exports = function assertEqual(
   actual = 0,
   expected = 0,
