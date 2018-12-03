@@ -1,33 +1,11 @@
 const helper = require("../1-strings/1.0-helper");
-
-class Stack {
-  constructor() {
-    this._array = [];
-  }
-
-  isEmpty() {
-    return this._array.length === 0;
-  }
-
-  push(value) {
-    this._array.push(value);
-  }
-
-  pop() {
-    return this._array.pop();
-  }
-
-  peek(stack) {
-    const obj = this._array;
-    const lastIndex = obj.length - 1;
-    return obj[lastIndex];
-  }
-}
+const Stack = require("./3.0-helper");
 
 class MinStack {
   constructor() {
-    this.stack = new Stack();
-    this.mins = new Stack();
+    this.stack = new Stack.Stack();
+
+    this.mins = new Stack.Stack();
     this.currMin = Number.MAX_SAFE_INTEGER;
   }
 
