@@ -1,7 +1,8 @@
 "use strict";
 
 module.exports = {
-  Stack
+  Stack,
+  Queue
 };
 
 function Stack() {
@@ -28,4 +29,24 @@ Stack.prototype.peek = function(stack) {
 
 Stack.prototype.length = function() {
   return this._array.length;
+};
+
+function Queue() {
+  this.arr = [];
+}
+
+Queue.prototype.add = function(animal) {
+  this.arr.unshift(animal);
+};
+
+Queue.prototype.remove = function() {
+  return this.arr.pop();
+};
+
+Queue.prototype.peek = function() {
+  return this.arr[this.arr.length - 1];
+};
+
+Queue.prototype.isEmpty = function() {
+  return this.arr.length === 0;
 };
