@@ -1,4 +1,4 @@
-const Graph = require("./4.0-helper");
+const helper = require("./4.0-helper");
 const Queue = require("../3-stacks-and-queues/3.0-helper");
 
 const isRouteBetween = (node1, node2, graph) => {
@@ -49,7 +49,7 @@ const isRouteBetween = (node1, node2, graph) => {
   return false;
 };
 
-const g = new Graph();
+const g = new helper.Graph();
 
 g.addNode("a");
 g.addNode("b");
