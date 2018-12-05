@@ -59,15 +59,18 @@ g.addNode("e");
 g.addNode("f");
 
 g.addEdge("a", "e");
-g.addEdge("a", "c");
-g.addEdge("b", "d");
-g.addEdge("c", "e");
+g.addEdge("a", "d");
+g.addEdge("a", "f");
+g.addEdge("c", "b");
 g.addEdge("d", "a");
+g.addEdge("d", "e");
 g.addEdge("e", "x");
-// g.addEdge("d", "e");
-// g.addEdge("f", "b");
-// g.addEdge("f", "a");
+g.addEdge("f", "b");
 
 console.log(g);
 
-console.log(isRouteBetween("x", "b", g));
+console.log(isRouteBetween("a", "x", g) + " true");
+console.log(isRouteBetween("d", "b", g) + " true");
+console.log(isRouteBetween("c", "a", g) + " false");
+console.log(isRouteBetween("f", "x", g) + " false");
+console.log(isRouteBetween("x", "b", g) + " false");
