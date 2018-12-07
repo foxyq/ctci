@@ -6,7 +6,8 @@ const list = require("../2-linked-lists/2.0-helper");
 module.exports = {
   Graph,
   BST,
-  printTreeInOrder
+  printTreeInOrder,
+  getHeight
 };
 
 // *********** GRAPH ***********
@@ -120,7 +121,6 @@ BST.prototype.listOfDepths = function() {
     const node = q1.remove();
 
     levelList.pushToTail(node.value);
-    // push(node.value);
 
     if (node.left !== null) {
       qNextLevel.add(node.left);
@@ -130,7 +130,6 @@ BST.prototype.listOfDepths = function() {
     }
 
     if (q1.isEmpty()) {
-      //   console.log(levelList);
       depths.push(levelList);
       levelList = new list.LinkedList();
       q1 = qNextLevel;
@@ -141,6 +140,31 @@ BST.prototype.listOfDepths = function() {
   return depths;
 };
 
+BST.prototype.checkBalanced = function() {
+  return getHeight(this) != Number.MIN_SAFE_INTEGER;
+};
+
+function getHeight(node) {
+  if (node == null) return -1;
+
+  const errorMin = Number.MIN_SAFE_INTEGER;
+
+  const leftHeight = getHeight(node.left);
+  const rightHeight = getHeight(node.right);
+
+  if (leftHeight == errorMin || rightHeight == errorMin) {
+    return errorMin;
+  }
+
+  const heightDiff = Math.abs(leftHeight - rightHeight);
+
+  if (heightDiff > 1) {
+    return errorMin;
+  }
+
+  return Math.max(leftHeight, rightHeight) + 1;
+}
+
 function printTreeInOrder(node) {
   if (node) {
     printTreeInOrder(node.left);
@@ -148,15 +172,3 @@ function printTreeInOrder(node) {
     printTreeInOrder(node.right);
   }
 }
-
-// const tree = new BST(9);
-
-// tree.insert(8);
-// tree.insert(7);
-// tree.insert(11);
-// tree.insert(14);
-// tree.insert(10);
-
-// console.log("***");
-// printTreeInOrder(tree);
-// console.log("***");
