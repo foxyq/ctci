@@ -8,7 +8,8 @@ module.exports = {
   BST,
   printTreeInOrder,
   getHeight,
-  isBST
+  isBST,
+  inOrderSuccessor
 };
 
 // *********** GRAPH ***********
@@ -196,3 +197,65 @@ function isBST(node, min, max) {
 
   return true;
 }
+
+function getLeftMostChild(node) {
+  while (node.left) {
+    node = node.left;
+  }
+
+  return node;
+}
+
+function getParent(node, start) {
+  if (node && start) {
+    if (start.left === node || start.right === node) {
+      return start;
+    } else {
+      if (node.value < start.value) {
+        return getParent(node, start.left);
+      } else {
+        return getParent(node, start.right);
+      }
+    }
+  }
+  return null;
+}
+
+function inOrderSuccessor(tree, node) {
+  if (!node) {
+    return null;
+  }
+
+  if (node.right !== null) {
+    return getLeftMostChild(node.right);
+  } else {
+    let parent = getParent(node, tree);
+
+    while (parent !== null) {
+      if (node === parent.left) {
+        return parent;
+      }
+
+      if (parent.value > node.value) {
+        return parent;
+      }
+
+      parent = getParent(parent, tree);
+    }
+  }
+  return null;
+}
+
+// const tree = new BST(9);
+// tree.insert(1);
+// tree.insert(5);
+// tree.insert(4);
+// tree.insert(2);
+// tree.insert(65);
+// tree.insert(23);
+// tree.insert(36);
+// tree.insert(13);
+// tree.insert(54);
+// tree.insert(44);
+
+// tree.printLevelOrder();
