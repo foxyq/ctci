@@ -1,6 +1,7 @@
 "use strict";
 
 const helper = require("../3-stacks-and-queues/3.0-helper");
+const list = require("../2-linked-lists/2.0-helper");
 
 module.exports = {
   Graph,
@@ -103,6 +104,41 @@ BST.prototype.printLevelOrder = function() {
       nextq = new helper.Queue();
     }
   }
+};
+
+BST.prototype.listOfDepths = function() {
+  if (!this.left && !this.right) return this.value;
+
+  const depths = [];
+  let levelList = new list.LinkedList();
+  let q1 = new helper.Queue();
+  let qNextLevel = new helper.Queue();
+
+  q1.add(this);
+
+  while (!q1.isEmpty()) {
+    const node = q1.remove();
+
+    levelList.pushToTail(node.value);
+    // push(node.value);
+
+    if (node.left !== null) {
+      qNextLevel.add(node.left);
+    }
+    if (node.right !== null) {
+      qNextLevel.add(node.right);
+    }
+
+    if (q1.isEmpty()) {
+      //   console.log(levelList);
+      depths.push(levelList);
+      levelList = new list.LinkedList();
+      q1 = qNextLevel;
+      qNextLevel = new helper.Queue();
+    }
+  }
+
+  return depths;
 };
 
 function printTreeInOrder(node) {
