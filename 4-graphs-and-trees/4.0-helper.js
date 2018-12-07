@@ -7,7 +7,8 @@ module.exports = {
   Graph,
   BST,
   printTreeInOrder,
-  getHeight
+  getHeight,
+  isBST
 };
 
 // *********** GRAPH ***********
@@ -144,6 +145,10 @@ BST.prototype.checkBalanced = function() {
   return getHeight(this) != Number.MIN_SAFE_INTEGER;
 };
 
+BST.prototype.checkBST = function() {
+  return isBST(this, Number.MIN_SAFE_INTEGER, Number.MAX_SAFE_INTEGER);
+};
+
 function getHeight(node) {
   if (node == null) return -1;
 
@@ -171,4 +176,23 @@ function printTreeInOrder(node) {
     console.log(node.value);
     printTreeInOrder(node.right);
   }
+}
+
+function isBST(node, min, max) {
+  if (!node) {
+    return true;
+  }
+
+  if (node.value < min || node.value > max) {
+    return false;
+  }
+
+  if (
+    !isBST(node.left, min, node.value) ||
+    !isBST(node.right, node.value, max)
+  ) {
+    return false;
+  }
+
+  return true;
 }
