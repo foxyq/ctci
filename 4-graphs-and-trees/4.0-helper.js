@@ -9,7 +9,8 @@ module.exports = {
   printTreeInOrder,
   getHeight,
   isBST,
-  inOrderSuccessor
+  inOrderSuccessor,
+  buildOrder
 };
 
 // *********** GRAPH ***********
@@ -245,6 +246,55 @@ function inOrderSuccessor(tree, node) {
   }
   return null;
 }
+
+///////////// GRAPH BUILD ORDER 4.7 ///////
+
+function buildOrder(projects, dependencies) {
+  // create a graph
+  const graph = buildOrderGraph(projects, dependencies);
+  const order = [];
+
+  let graphNodeList = Object.keys(graph.nodes);
+
+  while (graphNodeList.length > 0) {
+    let prevState = order.slice();
+    let noDependencies = graphNodeList.slice();
+
+    for (let node in graph.nodes) {
+      Object.keys(graph.nodes[node]).forEach(key => {
+        if (noDependencies.includes(key)) {
+          noDependencies.splice(noDependencies.indexOf(key), 1);
+        }
+      });
+    }
+
+    noDependencies.forEach(node => {
+      order.push(node);
+      graph.removeNode(node);
+      graphNodeList = Object.keys(graph.nodes);
+    });
+
+    if (order.length === prevState.length) {
+      return false;
+    }
+  }
+
+  return order;
+}
+
+const buildOrderGraph = (projects, dependencies) => {
+  const graph = new Graph();
+
+  projects.forEach(project => {
+    graph.addNode(project);
+  });
+
+  dependencies.forEach(dep => {
+    graph.addEdge(dep[0], dep[1]);
+  });
+
+  return graph;
+};
 
 // const tree = new BST(9);
 // tree.insert(1);
