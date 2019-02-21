@@ -8,6 +8,7 @@ module.exports = {
   BST,
   printTreeInOrder,
   getHeight,
+  getParent,
   isBST,
   inOrderSuccessor,
   buildOrder
@@ -150,6 +151,10 @@ BST.prototype.checkBalanced = function() {
 BST.prototype.checkBST = function() {
   return isBST(this, Number.MIN_SAFE_INTEGER, Number.MAX_SAFE_INTEGER);
 };
+
+// BST.prototype.getParentList = function(node) {
+//   const list = [];
+// };
 
 function getHeight(node) {
   if (node == null) return -1;
