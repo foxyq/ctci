@@ -1,7 +1,7 @@
-"use strict";
+'use strict';
 
-const helper = require("../3-stacks-and-queues/3.0-helper");
-const list = require("../2-linked-lists/2.0-helper");
+const helper = require('../3-stacks-and-queues/3.0-helper');
+const list = require('../2-linked-lists/2.0-helper');
 
 module.exports = {
   Graph,
@@ -11,7 +11,8 @@ module.exports = {
   getParent,
   isBST,
   inOrderSuccessor,
-  buildOrder
+  buildOrder,
+  diameterOfBinaryTree,
 };
 
 // *********** GRAPH ***********
@@ -22,7 +23,7 @@ function Graph() {
 
 Graph.prototype.addNode = function(value) {
   if (this.nodes[value] !== undefined) {
-    return "-- Node already exists --";
+    return '-- Node already exists --';
   }
 
   this.nodes[value] = {};
@@ -48,7 +49,7 @@ Graph.prototype.addEdge = function(from, to) {
     return "-- Node doesn't exist --";
   }
   if (this.nodes[from][to]) {
-    return "-- Edge already exists --";
+    return '-- Edge already exists --';
   }
 
   this.nodes[from][to] = true;
@@ -103,7 +104,7 @@ BST.prototype.printLevelOrder = function() {
       nextq.add(currNode.right);
     }
     if (q.isEmpty()) {
-      console.log(level.join(","));
+      console.log(level.join(','));
       level = [];
       q = nextq;
       nextq = new helper.Queue();
@@ -250,6 +251,27 @@ function inOrderSuccessor(tree, node) {
     }
   }
   return null;
+}
+
+function diameterOfBinaryTree(root) {
+  if (!root) return 0;
+
+  let diameter = 0;
+
+  const searchDepth = node => {
+    if (!node) return 0;
+
+    let left = node.left ? 1 + searchDepth(node.left) : 0;
+    let right = node.right ? 1 + searchDepth(node.right) : 0;
+
+    diameter = Math.max(diameter, left + right);
+
+    return Math.max(left, right);
+  };
+
+  searchDepth(root);
+
+  return diameter;
 }
 
 ///////////// GRAPH BUILD ORDER 4.7 ///////

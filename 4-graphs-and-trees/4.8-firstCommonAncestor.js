@@ -1,4 +1,4 @@
-const helper = require("./4.0-helper");
+const helper = require('./4.0-helper');
 
 const tree = new helper.BST(9);
 
@@ -28,7 +28,7 @@ const getParentList = (tree, node) => {
     currNode = parent;
   }
 
-  console.log("***");
+  console.log('***');
   list.forEach(node => {
     console.log(node.value);
   });
