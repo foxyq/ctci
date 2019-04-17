@@ -1,5 +1,5 @@
-const h = require("./4.0-helper");
-const Queue = require("../3-stacks-and-queues/3.0-helper");
+const h = require('./4.0-helper');
+const Queue = require('../3-stacks-and-queues/3.0-helper');
 
 const getMid = arr => {
   return Math.floor(arr.length / 2);
@@ -14,7 +14,7 @@ const createMinimalTree = (arr, tree) => {
     }
 
     createMinimalTree(arr.slice(0, mid), tree);
-    createMinimalTree(arr.slice(mid + 1, arr.length), tree);
+    createMinimalTree(arr.slice(mid + 1), tree);
   } else {
     if (arr[0] !== undefined) {
       tree.insert(arr[0]);

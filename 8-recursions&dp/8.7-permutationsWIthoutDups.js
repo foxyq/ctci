@@ -1,21 +1,19 @@
-const permutations = string => {
-  const len = string.length;
+const permutations = str => {
+  const res = [];
 
-  let res = [];
-
-  if (len === 0) {
-    res.push('');
+  if (str === '') {
+    res.push(str);
     return res;
   }
 
-  for (let i = 0; i < len; i++) {
-    const before = string.substring(0, i);
-    const after = string.substring(i + 1, len);
+  for (let i = 0; i < str.length; i++) {
+    const beforeI = str.substr(0, i);
+    const afterI = str.substr(i + 1);
 
-    let partials = permutations(before + after);
+    const partials = permutations(beforeI + afterI);
 
-    partials.forEach(x => {
-      res.push(string.charAt(i) + x);
+    partials.forEach(perm => {
+      res.push(str[i] + perm);
     });
   }
 
@@ -23,4 +21,4 @@ const permutations = string => {
 };
 
 console.log(permutations('abc'));
-console.log('fails with ' + permutations('aac'));
+// console.log('fails with ' + permutations('aac'));
