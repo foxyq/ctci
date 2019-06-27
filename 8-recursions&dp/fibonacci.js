@@ -7,7 +7,7 @@ const fibonnaci = n => {
   return fibonnaci(n - 1) + fibonnaci(n - 2);
 };
 
-[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].forEach(num => console.log(fibonnaci(num)));
+// [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].forEach(num => console.log(fibonnaci(num)));
 
 ///
 console.log('***');
@@ -33,4 +33,4 @@ const fib = num => {
   return getFib(num);
 };
 
-console.log(fib(80));
+console.log(fib(1231));

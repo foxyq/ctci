@@ -24,87 +24,81 @@ makeChange(2) === 2
 
 */
 
-const makeChange = (sum, curr = []) => {
-  const coins = [1, 2, 5, 10, 20, 50, 100, 200];
+// const makeChange = (sum, curr = []) => {
+//   const coins = [1, 2, 5, 10, 20, 50, 100, 200];
 
-  if (sum < 1) return 0;
+//   if (sum < 1) return 0;
 
-  let result = 0;
+//   let result = 0;
+//   const validCoins = coins.filter(val => val <= sum);
 
-  const validCoins = coins.filter(val => val <= sum);
+//   validCoins.forEach(coin => {
+//     if (coin === sum) {
+//       result += 1;
+//       curr.push(coin);
+//     } else {
+//       curr.push(coin);
+//       result += makeChange(sum - coin, curr);
+//     }
+//   });
 
-  validCoins.forEach(coin => {
-    if (coin === sum) {
-      result += 1;
-      curr.push(coin);
-    } else {
-      curr.push(coin);
-      result += makeChange(sum - coin, curr);
-    }
-  });
+//   const set = new Set(curr);
 
-  // console.log(curr);
+//   return set.size;
+// };
 
-  const set = new Set(curr);
+// console.log(makeChange(10)); // 1111, 22, 211
+// console.log(makeChange(5)); // 5, 221, 2111, 11111
 
-  return set.size;
+// const values = [1, 2, 5, 10, 20, 50, 100, 200];
 
-  //  return result;
-};
+// var makeChange = function(total) {
+//   let C = Array.from({ length: total + 1 }, () => 0);
+//   C[0] = 1;
+//   for (let i = 0; i < values.length; i++) {
+//     for (let j = C[i]; j <= total; j++) {
+//       if (j - values[i] >= 0) {
+//         C[j] += C[j - values[i]];
+//       }
+//     }
+//   }
+//   return C[total];
+// };
 
-console.log(makeChange(4)); // 1111, 22, 211
-console.log(makeChange(5)); // 5, 221, 2111, 11111
+// ////
 
-//////////////////////////////////////////
-const values = [1, 2, 5, 10, 20, 50, 100, 200];
+// var change = function(amount, coins) {
+//   const memo = new Array(amount + 1).fill(0);
+//   memo[0] = 1;
 
-var makeChange = function(total) {
-  let C = Array.from({ length: total + 1 }, () => 0);
-  C[0] = 1;
-  for (let i = 0; i < values.length; i++) {
-    for (let j = C[i]; j <= total; j++) {
-      if (j - values[i] >= 0) {
-        C[j] += C[j - values[i]];
-      }
-    }
-  }
-  return C[total];
-};
+//   for (const coin of coins) {
+//     for (let i = coin; i < memo.length; i++) {
+//       memo[i] += memo[i - coin];
+//     }
+//   }
 
-////
+//   return memo[amount];
+// };
 
-var change = function(amount, coins) {
-  const memo = new Array(amount + 1).fill(0);
-  memo[0] = 1;
+// const coins = [1, 2, 5, 10, 20, 50, 100, 200];
 
-  for (const coin of coins) {
-    for (let i = coin; i < memo.length; i++) {
-      memo[i] += memo[i - coin];
-    }
-  }
+// console.log(change(10, coins));
 
-  return memo[amount];
-};
+// ///
 
-const coins = [1, 2, 5, 10, 20, 50, 100, 200];
+// var coinChange = function(coins, amount) {
+//   let dp = new Array(amount + 1);
+//   dp[0] = 0;
+//   for (let i = 1; i <= amount; i++) {
+//     dp[i] = Number.MAX_SAFE_INTEGER;
+//     coins.forEach(coin => {
+//       if (i - coin >= 0) dp[i] = Math.min(dp[i], dp[i - coin] + 1);
+//     });
+//   }
+//   return dp[amount] === Number.MAX_SAFE_INTEGER ? -1 : dp[amount];
+// };
 
-console.log(change(5, coins));
-
-///
-
-var coinChange = function(coins, amount) {
-  let dp = new Array(amount + 1);
-  dp[0] = 0;
-  for (let i = 1; i <= amount; i++) {
-    dp[i] = Number.MAX_SAFE_INTEGER;
-    coins.forEach(coin => {
-      if (i - coin >= 0) dp[i] = Math.min(dp[i], dp[i - coin] + 1);
-    });
-  }
-  return dp[amount] === Number.MAX_SAFE_INTEGER ? -1 : dp[amount];
-};
-
-////
+// ////
 
 function coinChange(coins, amount) {
   coins.sort((a, b) => b - a);
@@ -131,3 +125,5 @@ function coinChange(coins, amount) {
 
   return res === Infinity ? -1 : res;
 }
+
+console.log(coinChange([1, 2, 5, 10], 5));
